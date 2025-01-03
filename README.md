@@ -26,7 +26,7 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/archivestr.git
+   git clone https://github.com/PR0M3TH3AN/Archivestr.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -66,4 +66,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## GitHub Repository
 
-Visit the [GitHub repository](https://github.com/your-repo/archivestr) for the source code and updates.
+Visit the [GitHub repository](https://github.com/PR0M3TH3AN/Archivestr) for the source code and updates.
