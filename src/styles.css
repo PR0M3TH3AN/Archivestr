@@ -1,50 +1,110 @@
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
 }
 
 .container {
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
+    max-width: 1200px;
+    margin: 20px auto;
     padding: 20px;
+    background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Header and Stats */
 h1 {
     text-align: center;
+    margin-bottom: 10px;
 }
 
-label {
+.stats {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+input[type="file"] {
     display: block;
-    margin-top: 15px;
+    margin: 20px auto;
 }
 
-input[type="text"],
-textarea {
+/* Table styles */
+table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
     padding: 10px;
-    margin-top: 5px;
-    box-sizing: border-box;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 15px;
-    background-color: #007BFF;
-    border: none;
-    color: #fff;
+th {
     cursor: pointer;
+    background: #f4f4f4;
+    position: relative;
 }
 
-button:hover {
-    background-color: #0056b3;
+th:hover {
+    background: #e0e0e0;
 }
 
-#status {
+.empty-message {
+    text-align: center;
+    color: #888;
     margin-top: 20px;
-    min-height: 20px;
+}
+
+.content-cell {
+    max-width: 600px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Sort indicators */
+.sort-indicator::after {
+    content: '⬍';
+    margin-left: 5px;
+}
+
+.sort-asc::after {
+    content: '↑';
+}
+
+.sort-desc::after {
+    content: '↓';
+}
+
+.number-column {
+    width: 50px;
+    text-align: right;
+    color: #666;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
 }

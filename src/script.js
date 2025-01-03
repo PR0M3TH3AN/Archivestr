@@ -52,11 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update the filter to include additional kinds
         const filter = {
-            kinds: [0, 1, 2, 3, 4, 6, 7, 10002, 30023], // Include multiple event kinds
-            authors: [pubkey],
-            limit: 1000,
+            kinds: [0, 1, 2, 3, 4, 6, 7, 10002, 30023, 10509], // Include all relevant kinds
+            authors: [pubkey], // Fetch events from the specified pubkey
         };
-
+        
         relayUrls.forEach((url) => {
             try {
                 const sub = pool.sub([url], [filter]);
@@ -78,12 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             case 4:
                                 console.log('Encrypted DM captured:', event);
                                 break;
+                            case 10509:
+                                console.log('Ephemeral DM captured:', event);
+                                break;
                             case 30023:
                                 console.log('Long-Form Content captured:', event);
                                 break;
                             default:
                                 console.log('Other event captured:', event);
                         }
+                        
                         collectedEvents.push(event); // Store the raw event data
                         eventIds.add(event.id);
                     }
