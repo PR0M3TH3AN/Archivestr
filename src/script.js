@@ -176,26 +176,60 @@ document.addEventListener('DOMContentLoaded', () => {
         let failureCount = 0;
 
         relayUrls.forEach((url) => {
-            for (const event of loadedEvents) {
-                try {
-                    const success = pool.publish([url], event); // Publish event to relay
-                    if (success) {
-                        successCount++;
-                        console.log(`Event broadcasted successfully to ${url}`);
-                        statusDiv.innerHTML += `<br>Event broadcasted successfully to ${url}`;
-                    } else {
-                        failureCount++;
-                        console.error(`Relay ${url} rejected the event.`);
-                        statusDiv.innerHTML += `<br>Relay ${url} rejected the event.`;
+            try {
+                const sub = pool.sub([url], [filter]);
+        
+                subscriptions.push(sub);
+        
+                sub.on('event', (event) => {
+                    if (!eventIds.has(event.id)) {
+                        switch (event.kind) {
+                            case 0:
+                                console.log('Profile Metadata captured:', event);
+                                break;
+                            case 2:
+                                console.log('Relay Recommendation captured:', event);
+                                break;
+                            case 3:
+                                console.log('Contact List captured:', event);
+                                break;
+                            case 4:
+                                console.log('Encrypted DM captured:', event);
+                                break;
+                            case 30023:
+                                console.log('Long-Form Content captured:', event);
+                                break;
+                            default:
+                                console.log('Other event captured:', event);
+                        }
+                        collectedEvents.push(event); // Store the raw event data
+                        eventIds.add(event.id);
                     }
-                } catch (err) {
-                    failureCount++;
-                    console.error(`Broadcast failed for ${url}:`, err);
-                    statusDiv.innerHTML += `<br>Broadcast failed for ${url}: ${err.message}`;
-                }
+                });
+        
+                sub.on('eose', () => {
+                    eoseTracker[url] = true;
+                    console.log(`EOSE received from ${url}`);
+                    statusDiv.innerHTML += `<br>EOSE received from ${url}`;
+                    checkCompletion();
+                });
+        
+                sub.on('error', (err) => {
+                    console.error(`Error on ${url}:`, err);
+                    statusDiv.innerHTML += `<br>Error on ${url}: ${err.message}`;
+                    // Mark the relay as complete to avoid stalling collection
+                    eoseTracker[url] = true;
+                    checkCompletion();
+                });
+            } catch (err) {
+                console.error(`Subscription failed for ${url}:`, err);
+                statusDiv.innerHTML += `<br>Subscription failed for ${url}: ${err.message}`;
+                // Mark the relay as complete to avoid stalling collection
+                eoseTracker[url] = true;
+                checkCompletion();
             }
         });
-
+        
         pool.close();
         statusDiv.innerHTML += `<br>Broadcast complete: ${successCount} success(es), ${failureCount} failure(s).`;
     }
