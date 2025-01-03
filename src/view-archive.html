@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostr Archive Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .stats {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            cursor: pointer;
+            background: #f4f4f4;
+            position: relative;
+        }
+        th:hover {
+            background: #e0e0e0;
+        }
+        .empty-message {
+            text-align: center;
+            color: #888;
+            margin-top: 20px;
+        }
+        .content-cell {
+            max-width: 600px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .sort-indicator::after {
+            content: '⬍';
+            margin-left: 5px;
+        }
+        .sort-asc::after {
+            content: '↑';
+        }
+        .sort-desc::after {
+            content: '↓';
+        }
+        .number-column {
+            width: 50px;
+            text-align: right;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nostr Archive Viewer</h1>
+        <div id="stats" class="stats">No data loaded</div>
+        <input type="file" id="fileInput" accept=".json">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th class="number-column">#</th>
+                    <th data-sort="created_at">Time <span class="sort-indicator"></span></th>
+                    <th data-sort="kind">Kind <span class="sort-indicator"></span></th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="empty-message">
+                    <td colspan="4">No data loaded. Please load a JSON archive file.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', handleFileLoad);
+
+        let archiveData = [];
+        let currentSort = { column: 'created_at', order: 'desc' };
+
+        function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!Array.isArray(data)) throw new Error('Invalid archive format: Expected an array.');
+                    archiveData = data;
+                    updateStats();
+                    sortTable(currentSort.column); // Initial sort
+                } catch (err) {
+                    alert(`Failed to load archive: ${err.message}`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function updateStats() {
+            const statsDiv = document.getElementById('stats');
+            const kindCounts = archiveData.reduce((acc, event) => {
+                acc[event.kind] = (acc[event.kind] || 0) + 1;
+                return acc;
+            }, {});
+            
+            const totalEvents = archiveData.length;
+            let statsText = `Total Events: ${totalEvents}<br>`;
+            statsText += 'Most Common Types: ';
+            
+            // Get top 3 most common kinds
+            const topKinds = Object.entries(kindCounts)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 3)
+                .map(([kind, count]) => `${getKindLabel(parseInt(kind))}: ${count}`);
+            
+            statsText += topKinds.join(' | ');
+            
+            statsDiv.innerHTML = statsText;
+        }
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            if (archiveData.length === 0) {
+                tbody.innerHTML = `<tr class="empty-message">
+                    <td colspan="4">No data loaded. Please load a JSON archive file.</td>
+                </tr>`;
+                return;
+            }
+
+            archiveData.forEach((event, index) => {
+                const row = document.createElement('tr');
+                try {
+                    row.innerHTML = `
+                        <td class="number-column">${index + 1}</td>
+                        <td>${new Date(event.created_at * 1000).toLocaleString()}</td>
+                        <td>${getKindLabel(event.kind)}</td>
+                        <td class="content-cell">${getContentDisplay(event)}</td>
+                    `;
+                } catch (err) {
+                    console.error(`Error rendering event ${event.id}:`, err);
+                    row.innerHTML = `
+                        <td class="number-column">${index + 1}</td>
+                        <td>${new Date(event.created_at * 1000).toLocaleString()}</td>
+                        <td>${getKindLabel(event.kind)}</td>
+                        <td class="content-cell">Error loading content</td>
+                    `;
+                }
+                tbody.appendChild(row);
+            });
+
+            // Update sort indicators
+            document.querySelectorAll('#dataTable th[data-sort] .sort-indicator').forEach(indicator => {
+                indicator.className = 'sort-indicator';
+            });
+            const currentHeader = document.querySelector(`th[data-sort="${currentSort.column}"] .sort-indicator`);
+            if (currentHeader) {
+                currentHeader.classList.add(`sort-${currentSort.order}`);
+            }
+        }
+
+        function getKindLabel(kind) {
+            const kinds = {
+                0: 'Profile Metadata',
+                1: 'Short Text Note',
+                2: 'Recommend Relay',
+                3: 'Contacts',
+                4: 'Encrypted DM',
+                5: 'Event Deletion',
+                6: 'Repost',
+                7: 'Reaction',
+                8: 'Badge Award',
+                40: 'Channel Creation',
+                41: 'Channel Metadata',
+                42: 'Channel Message',
+                43: 'Channel Hide Message',
+                44: 'Channel Mute User',
+                1984: 'Reporting',
+                9734: 'Zap Request',
+                9735: 'Zap',
+                10000: 'Mute List',
+                10001: 'Pin List',
+                10002: 'Relay List Metadata',
+                30000: 'Follow List',
+                30001: 'Generic List',
+                30002: 'Relay List',
+                30003: 'Bookmark List',
+                30004: 'Communities',
+                30008: 'Profile Badges',
+                30009: 'Badge Definition',
+                30017: 'Create or update a stall',
+                30018: 'Create or update a product',
+                30023: 'Long-form Content',
+                30078: 'Application-specific Data',
+                30402: 'Classified Listing',
+                31989: 'Handler Recommendation',
+                31990: 'Handler Information'
+            };
+            return `${kind} (${kinds[kind] || 'Reserved/Custom'})`;
+        }
+
+        function getContentDisplay(event) {
+            try {
+                if (event.kind === 0) {
+                    const profile = JSON.parse(event.content || '{}');
+                    return `Name: ${profile.name || 'N/A'}<br>
+                            About: ${profile.about || 'N/A'}<br>
+                            Picture: ${profile.picture || 'N/A'}`;
+                } else if (event.kind === 30023) {
+                    // Display full long-form content
+                    const content = event.content || '';
+                    return content.replace(/\n/g, '<br>');
+                } else if (event.kind === 4) {
+                    return `Encrypted Message: ${event.content || 'N/A'}`;
+                } else if (event.kind === 7) {
+                    // Special handling for reactions
+                    return `Reaction: ${event.content || '+'}`;
+                } else if (event.kind === 6) {
+                    // Special handling for reposts
+                    return `Repost: ${event.content || 'No content'}`;
+                } else if (event.kind === 3) {
+                    // Special handling for contact lists
+                    try {
+                        const contacts = JSON.parse(event.content || '[]');
+                        return `Contact List: ${contacts.length} contacts`;
+                    } catch {
+                        return `Contact List: Unable to parse`;
+                    }
+                } else if (event.kind === 1) {
+                    // Display full short text note
+                    return event.content ? event.content.replace(/\n/g, '<br>') : 'No content available';
+                }
+                return event.content || 'No content available';
+            } catch (err) {
+                console.error(`Error processing event ${event.id}:`, err);
+                return 'Error processing content';
+            }
+        }
+
+        function sortTable(column) {
+            if (currentSort.column === column) {
+                currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.order = 'desc'; // Default to newest first
+            }
+
+            const order = currentSort.order === 'asc' ? 1 : -1;
+            archiveData.sort((a, b) => {
+                if (a[column] < b[column]) return -1 * order;
+                if (a[column] > b[column]) return 1 * order;
+                return 0;
+            });
+
+            renderTable();
+        }
+
+        document.querySelectorAll('#dataTable th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                sortTable(th.dataset.sort);
+            });
+        });
+    </script>
+</body>
+</html>

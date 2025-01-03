@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nostr Archive Collector</title>
+    <style>
+        /* Basic styling for better UX */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #status {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        #downloadBtn {
+            background: #007bff;
+        }
+        #spinner {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        /* Simple CSS Spinner */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #007bff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nostr Archive Collector</h1>
+        <form id="archiveForm">
+            <label for="npub">NPub (Public Key):</label>
+            <input type="text" id="npub" name="npub" placeholder="Enter NPub" required>
+            <!-- Removed pattern and title attributes -->
+    
+            <label for="relays">Relay URLs (one per line):</label>
+            <textarea id="relays" name="relays" rows="5" placeholder="wss://relay1.example.com
+wss://relay2.example.com" required></textarea>
+    
+            <button type="submit">Start Collecting</button>
+        </form>
+    
+        <div id="spinner">
+            <div class="loader"></div>
+        </div>
+    
+        <div id="status"></div>
+        <button id="downloadBtn" style="display: none;">Download Archive</button>
+    </div>
+
+    <!-- Include nostr-tools library via CDN (correct path) -->
+    <script src="https://cdn.jsdelivr.net/npm/nostr-tools@1.7.0/lib/nostr.bundle.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
