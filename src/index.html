@@ -8,67 +8,169 @@
     <meta http-equiv="Expires" content="0">
     <title>Archivestr</title>
     <meta name="description" content="Archivestr: A Nostr Archive Creation, Browser, and Broadcaster Tool">
-    <link rel="stylesheet" href="styles.css?v=" + Math.random()>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            text-align: center;
-            background: #fff;
-            padding: 20px 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        p {
-            margin-bottom: 30px;
-            font-size: 16px;
-            color: #555;
-        }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        a:hover {
-            background-color: #0056b3;
-        }
-        .github-link {
-            margin-top: 20px;
-            display: inline-block;
-            font-size: 14px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .github-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <!-- Corrected Cache-Busting for CSS -->
+    <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <body>
     <div class="container">
         <h1>Archivestr</h1>
         <p>A Nostr Archive Creation, Browser, and Broadcaster Tool</p>
-        <a href="collector.html">Collector</a>
-        <a href="view-archive.html">View Archive</a>
-        <a class="github-link" href="https://github.com/PR0M3TH3AN/Archivestr" target="_blank">GitHub Repository</a>
+        
+        <!-- Navigation -->
+        <div class="nav-links">
+            <a href="#home" onclick="showSection('home')">Home</a>
+            <a href="#collector" onclick="showSection('collector')">Collector</a>
+            <a href="#viewer" onclick="showSection('viewer')">View Archive</a>
+            <a href="#broadcast" onclick="showSection('broadcast')">Broadcast</a>
+        </div>
+
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <p>Choose an option above to get started!</p>
+        </div>
+
+        <!-- Collector Section -->
+        <div id="collector" class="section">
+            <h2>Nostr Archive Collector</h2>
+            <form id="archiveForm">
+                <label for="npub">NPub (Public Key):</label>
+                <input type="text" id="npub" name="npub" placeholder="Enter NPub" required>
+                
+                <label for="relays">Relay URLs (one per line):</label>
+                <textarea id="relays" name="relays" rows="5" placeholder="wss://relay1.example.com
+wss://relay2.example.com" required></textarea>
+                
+                <button type="submit">Start Collecting</button>
+            </form>
+            
+            <div id="spinner">
+                <div class="loader"></div>
+            </div>
+            
+            <div id="progressContainer" class="progress-container" style="display: none;">
+                <div id="progressBar" class="progress-bar">
+                    <span class="progress-text">0%</span>
+                </div>
+            </div>
+
+            <div id="status"></div>
+            <button id="downloadBtn" style="display: none;">Download Archive</button>
+        </div>
+
+        <!-- Broadcast Section -->
+        <div id="broadcast" class="section">
+            <h2>Broadcast Archive</h2>
+            <p>Select a JSON archive file to broadcast its events to relays.</p>
+            <input type="file" id="broadcastFileInput" accept=".json">
+            <div id="broadcastStatus"></div>
+            <div class="relay-input">
+                <label for="broadcastRelays">Relay URLs (one per line):</label>
+                <!-- Corrected Placeholder without Indentation -->
+                <textarea id="broadcastRelays" rows="5" placeholder="wss://relay1.example.com
+wss://relay2.example.com" required></textarea>
+            </div>
+            <button id="startBroadcastBtn" style="display: none;">Start Broadcasting</button>
+            <div id="broadcastProgress" class="progress-container" style="display: none;">
+                <div class="progress-bar">
+                    <span class="progress-text">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Viewer Section -->
+        <div id="viewer" class="section">
+            <h2>Archive Viewer</h2>
+            <div id="viewerStats" class="stats">No data loaded</div>
+            <input type="file" id="viewerFileInput" accept=".json">
+
+            <!-- Advanced Search Container -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search..."
+                        class="search-input"
+                    >
+                    <button id="advancedSearchToggle" class="search-toggle">
+                        Advanced Search
+                    </button>
+                </div>
+                <div id="advancedSearch" class="advanced-search" style="display: none;">
+                    <div class="search-options">
+                        <label>
+                            <input type="checkbox" id="useRegex"> 
+                            Use Regex
+                        </label>
+                        <label>
+                            <input type="checkbox" id="caseSensitive"> 
+                            Case Sensitive
+                        </label>
+                        <div class="filter-fields">
+                            <label>Search in:</label>
+                            <label>
+                                <input type="checkbox" id="searchContent" checked> 
+                                Content
+                            </label>
+                            <label>
+                                <input type="checkbox" id="searchKind" checked> 
+                                Kind
+                            </label>
+                            <label>
+                                <input type="checkbox" id="searchDate" checked> 
+                                Date
+                            </label>
+                        </div>
+                    </div>
+                    <div class="kind-filter">
+                        <label>Filter by Kind:</label>
+                        <select id="kindFilter" multiple>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="date-filter">
+                        <label>Date Range:</label>
+                        <input type="datetime-local" id="dateFrom" placeholder="From">
+                        <input type="datetime-local" id="dateTo" placeholder="To">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th class="number-column">#</th>
+                        <th data-sort="created_at">Time <span class="sort-indicator"></span></th>
+                        <th data-sort="kind">Kind <span class="sort-indicator"></span></th>
+                        <th>Content</th>
+                        <th>Actions</th> <!-- New Actions Column -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-message">
+                        <td colspan="5">No data loaded. Please load a JSON archive file.</td> <!-- Updated colspan -->
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button id="prevPage" onclick="changePage(-1)" disabled>Previous</button>
+                <span id="pageInfo">Page 1</span>
+                <button id="nextPage" onclick="changePage(1)" disabled>Next</button>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        <div class="footer-content">
+            <span class="copyright">CC0 - No Rights Reserved</span>
+            <a href="https://github.com/PR0M3TH3AN/Archivestr" target="_blank" class="footer-link">View on GitHub</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Corrected Cache-Busting for JS -->
+    <script src="https://cdn.jsdelivr.net/npm/nostr-tools@1.7.0/lib/nostr.bundle.js"></script>
+    <script src="script.js?v=1.0"></script>
 </body>
 </html>
