@@ -32,6 +32,7 @@ body {
     flex: 1;
     box-sizing: border-box;
     border-radius: 8px;
+    text-align: center; /* Ensures content is centered */
 }
 
 /* Tooltip styles */
@@ -94,11 +95,19 @@ body {
 }
 
 /* Typography */
+
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 32px;
-    color: var(--text-primary);
+    font-family: 'Merriweather', serif; /* Applies Merriweather font */
+    font-weight: 700; /* Ensures the font weight is bold */
+    font-size: 36px; /* Adjusts the font size as needed */
+    letter-spacing: 2px; /* Adds spacing between letters for a strong look */
+    text-align: center; /* Centers the text */
+    text-transform: uppercase; /* Transforms text to uppercase */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds subtle shadow */
+    line-height: 1.2; /* Adjusts line height */
+    margin-top: 10px; /* Adjusts top margin to align with the logo */
+    margin-bottom: 10px; /* Adjusts bottom margin for spacing */
+    color: var(--text-primary); /* Maintains existing text color */
 }
 
 h2 {
@@ -580,11 +589,6 @@ footer {
         margin-left: 5px;
     }
     
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
     .status-section p {
         margin: 5px 0;
         color: #666;
@@ -642,5 +646,30 @@ footer {
         margin: 10px 0;
         color: #2c5282;
     }
+}
 
+/* Responsive Adjustments for Logo */
+@media (max-width: 768px) {
+    .logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 12px;
+    }
+}
+
+/* Logo Styling */
+.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 20px auto;
+    display: block; /* Ensures block-level behavior for centering */
 }
