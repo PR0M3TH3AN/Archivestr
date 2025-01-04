@@ -550,21 +550,30 @@ function initializeBroadcast() {
     async function processBatch(batch, relayUrls, pool) {
         // First, publish all events in the batch in parallel
         const publishPromises = batch.map(async event => {
-            try {
-                const published = await pool.publish(relayUrls, event);
-                return {
-                    event,
-                    success: true,
-                    published
-                };
-            } catch (err) {
-                console.error(`Failed to publish event ${event.id}:`, err);
-                return {
-                    event,
-                    success: false,
-                    error: err.message
-                };
-            }
+            const relayResults = await Promise.all(relayUrls.map(async relay => {
+                try {
+                    const published = await pool.publish([relay], event);
+                    return {
+                        relay,
+                        success: true,
+                        published
+                    };
+                } catch (err) {
+                    console.error(`Failed to publish event ${event.id} to ${relay}:`, err);
+                    return {
+                        relay,
+                        success: false,
+                        error: err.message
+                    };
+                }
+            }));
+
+            const anySuccess = relayResults.some(r => r.success);
+            return {
+                event,
+                success: anySuccess,
+                relayResults
+            };
         });
 
         const publishResults = await Promise.allSettled(publishPromises);
@@ -650,7 +659,8 @@ function initializeBroadcast() {
                         <span class="event-id">${stats.latestVerified.eventId}</span>
                         <button class="copy-button" onclick="copyToClipboard('${stats.latestVerified.eventId}', 'latest-copy')">Copy</button>
                     </p>
-                    <p>✓ Found on ${stats.latestVerified.count} relays</p>
+                    <p>✓ Found on ${stats.latestVerified.count} relay(s):</p>
+                    <p class="relay-list">${stats.latestVerified.relays.join('\n')}</p>
                 </div>`;
         }
 
@@ -716,13 +726,16 @@ function initializeBroadcast() {
 
                 results.verified.forEach(verifyGroup => {
                     if (verifyGroup.value) {
-                        const successfulVerifications = verifyGroup.value.filter(v => v.success).length;
-                        stats.verifiedCount += successfulVerifications;
+                        // Count successful verifications across all relays
+                        const successfulRelays = verifyGroup.value.filter(v => v.success);
+                        stats.verifiedCount += successfulRelays.length;
 
-                        if (successfulVerifications > 0) {
+                        if (successfulRelays.length > 0) {
+                            // Store both the event ID and the specific relays it was found on
                             stats.latestVerified = {
                                 eventId: verifyGroup.value[0].eventId,
-                                count: successfulVerifications
+                                count: successfulRelays.length,
+                                relays: successfulRelays.map(v => v.relay)
                             };
                         }
                     }
@@ -758,6 +771,7 @@ function initializeBroadcast() {
                 </div>`;
         } finally {
             startButton.disabled = false;
+            pool.close();
         }
     });
 
@@ -805,11 +819,31 @@ async function broadcastSingleEvent(event, buttonElement) {
 
     const pool = new NostrTools.SimplePool();
     const verificationResults = [];
+    const publishResults = [];
 
     try {
-        const publishResult = await pool.publish(broadcastRelays, event);
+        // Publish to each relay individually and track results
+        for (const relay of broadcastRelays) {
+            try {
+                const published = await pool.publish([relay], event);
+                publishResults.push({
+                    relay,
+                    success: true,
+                    published
+                });
+            } catch (err) {
+                console.error(`Failed to publish to ${relay}:`, err);
+                publishResults.push({
+                    relay,
+                    success: false,
+                    error: err.message
+                });
+            }
+        }
 
-        if (publishResult) {
+        const anySuccessfulPublish = publishResults.some(r => r.success);
+
+        if (anySuccessfulPublish) {
             await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
             buttonElement.textContent = 'Verifying...';
             
@@ -825,6 +859,7 @@ async function broadcastSingleEvent(event, buttonElement) {
             const nostrBandLink = `https://nostr.band/event/${event.id}`;
             
             let message = `Event ID ${event.id} broadcast complete!\n\n`;
+            message += `Successfully published to ${publishResults.filter(r => r.success).length}/${broadcastRelays.length} relays\n`;
             message += `Found on ${foundOn.length} relay(s):\n${foundOn.join('\n')}\n\n`;
             message += `View on nostr.band: ${nostrBandLink}`;
             
@@ -841,7 +876,8 @@ async function broadcastSingleEvent(event, buttonElement) {
             // Log detailed results to console for debugging
             console.log('Verification Results:', {
                 eventId: event.id,
-                results: verificationResults
+                publish: publishResults,
+                verify: verificationResults
             });
         } else {
             alert(`Event ID ${event.id} failed to broadcast to any relays.`);
@@ -852,6 +888,7 @@ async function broadcastSingleEvent(event, buttonElement) {
     } finally {
         buttonElement.disabled = false;
         buttonElement.textContent = 'Broadcast';
+        pool.close();
     }
 }
 
