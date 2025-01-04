@@ -8,6 +8,23 @@
 - **Viewer**: Load JSON archives to browse and analyze event data. Includes advanced filtering options like regex search, date ranges, and kind filtering.
 - **Broadcast**: Distribute archived events to multiple relays with progress tracking and verification.
 
+## Supported Event Kinds
+
+Archivestr collects the following types of Nostr events:
+
+| **Kind** | **Description**                                    |
+|----------|----------------------------------------------------|
+| 0        | **Profile Metadata**: Information like name, bio, and picture. |
+| 1        | **Short Text Note**: Regular posts and updates.    |
+| 2        | **Relay Recommendation**: Suggested relays for others to use. |
+| 3        | **Contacts**: List of followed users and their relays. |
+| 4        | **Encrypted DM**: Direct messages encrypted for specific recipients. |
+| 6        | **Repost**: Shared content from other users.       |
+| 7        | **Reaction**: Reactions to posts, such as likes or emojis. |
+| 10002    | **Relay List**: Preferred relays for an account.   |
+| 30023    | **Long-Form Content**: Blog posts, articles, or other extended content. |
+| 10509    | **Ephemeral DM**: Short-lived direct messages.     |
+
 ## Getting Started
 
 ### Prerequisites
