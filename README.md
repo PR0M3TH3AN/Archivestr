@@ -1,3 +1,5 @@
+![Archivestr Logo](https://archivestr.netlify.app/Archivestr.png)
+
 # Archivestr
 
 **Archivestr** is a Nostr tool designed to help you create, browse, and broadcast archives. Whether you're archiving your own Nostr activity, exploring event metadata, or sharing archives with others, Archivestr offers an intuitive and efficient way to manage your Nostr data.
