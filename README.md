@@ -1,4 +1,4 @@
-![Archivestr Logo](https://archivestr.netlify.app/Archivestr.png)
+![Archivestr Logo](https://archivestr.netlify.app/img/Archivestr.png)
 
 # Archivestr
 
