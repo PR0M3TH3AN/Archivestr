@@ -8,7 +8,6 @@
     <meta http-equiv="Expires" content="0">
     <title>Archivestr</title>
     <meta name="description" content="Archivestr: A Nostr Archive Creation, Browser, and Broadcaster Tool">
-    <!-- Corrected Cache-Busting for CSS -->
     <link rel="stylesheet" href="styles.css?v=1.0">
 </head>
 <body>
@@ -26,7 +25,62 @@
 
         <!-- Home Section -->
         <div id="home" class="section active">
-            <p>Choose an option above to get started!</p>
+            <h2>Welcome to Archivestr</h2>
+            <p>Archivestr is your one-stop tool for creating, browsing, and broadcasting Nostr archives. Whether you’re collecting events, exploring data, or sharing with others, Archivestr makes it simple and efficient.</p>
+
+            <h3>Supported Event Kinds</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kind</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>Profile Metadata: Information like name, bio, and picture.</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Short Text Note: Regular posts and updates.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Relay Recommendation: Suggested relays for others to use.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Contacts: List of followed users and their relays.</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Encrypted DM: Direct messages encrypted for specific recipients.</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Repost: Shared content from other users.</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Reaction: Reactions to posts, such as likes or emojis.</td>
+                    </tr>
+                    <tr>
+                        <td>10002</td>
+                        <td>Relay List: Preferred relays for an account.</td>
+                    </tr>
+                    <tr>
+                        <td>30023</td>
+                        <td>Long-Form Content: Blog posts, articles, or other extended content.</td>
+                    </tr>
+                    <tr>
+                        <td>10509</td>
+                        <td>Ephemeral DM: Short-lived direct messages.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Use the navigation links above to get started!</p>
         </div>
 
         <!-- Collector Section -->
@@ -55,26 +109,6 @@ wss://relay2.example.com" required></textarea>
 
             <div id="status"></div>
             <button id="downloadBtn" style="display: none;">Download Archive</button>
-        </div>
-
-        <!-- Broadcast Section -->
-        <div id="broadcast" class="section">
-            <h2>Broadcast Archive</h2>
-            <p>Select a JSON archive file to broadcast its events to relays.</p>
-            <input type="file" id="broadcastFileInput" accept=".json">
-            <div id="broadcastStatus"></div>
-            <div class="relay-input">
-                <label for="broadcastRelays">Relay URLs (one per line):</label>
-                <!-- Corrected Placeholder without Indentation -->
-                <textarea id="broadcastRelays" rows="5" placeholder="wss://relay1.example.com
-wss://relay2.example.com" required></textarea>
-            </div>
-            <button id="startBroadcastBtn" style="display: none;">Start Broadcasting</button>
-            <div id="broadcastProgress" class="progress-container" style="display: none;">
-                <div class="progress-bar">
-                    <span class="progress-text">0%</span>
-                </div>
-            </div>
         </div>
 
         <!-- Viewer Section -->
@@ -144,12 +178,12 @@ wss://relay2.example.com" required></textarea>
                         <th data-sort="created_at">Time <span class="sort-indicator"></span></th>
                         <th data-sort="kind">Kind <span class="sort-indicator"></span></th>
                         <th>Content</th>
-                        <th>Actions</th> <!-- New Actions Column -->
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="empty-message">
-                        <td colspan="5">No data loaded. Please load a JSON archive file.</td> <!-- Updated colspan -->
+                        <td colspan="5">No data loaded. Please load a JSON archive file.</td>
                     </tr>
                 </tbody>
             </table>
@@ -157,6 +191,25 @@ wss://relay2.example.com" required></textarea>
                 <button id="prevPage" onclick="changePage(-1)" disabled>Previous</button>
                 <span id="pageInfo">Page 1</span>
                 <button id="nextPage" onclick="changePage(1)" disabled>Next</button>
+            </div>
+        </div>
+
+        <!-- Broadcast Section -->
+        <div id="broadcast" class="section">
+            <h2>Broadcast Archive</h2>
+            <p>Select a JSON archive file to broadcast its events to relays.</p>
+            <input type="file" id="broadcastFileInput" accept=".json">
+            <div id="broadcastStatus"></div>
+            <div class="relay-input">
+                <label for="broadcastRelays">Relay URLs (one per line):</label>
+                <textarea id="broadcastRelays" rows="5" placeholder="wss://relay1.example.com
+wss://relay2.example.com" required></textarea>
+            </div>
+            <button id="startBroadcastBtn" style="display: none;">Start Broadcasting</button>
+            <div id="broadcastProgress" class="progress-container" style="display: none;">
+                <div class="progress-bar">
+                    <span class="progress-text">0%</span>
+                </div>
             </div>
         </div>
     </div>
@@ -169,7 +222,6 @@ wss://relay2.example.com" required></textarea>
     </footer>
 
     <!-- Scripts -->
-    <!-- Corrected Cache-Busting for JS -->
     <script src="https://cdn.jsdelivr.net/npm/nostr-tools@1.7.0/lib/nostr.bundle.js"></script>
     <script src="script.js?v=1.0"></script>
 </body>
