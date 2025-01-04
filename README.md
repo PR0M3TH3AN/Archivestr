@@ -1,26 +1,37 @@
 # Archivestr
 
-Archivestr is a Nostr tool for creating, browsing, and broadcasting archives. It provides a seamless way to interact with Nostr archives through a collector interface for creating archives in JSON format and a viewer for browsing archive files.
+**Archivestr** is a Nostr tool designed to help you create, browse, and broadcast archives. Whether you're archiving your own Nostr activity, exploring event metadata, or sharing archives with others, Archivestr offers an intuitive and efficient way to manage your Nostr data.
 
 ## Features
 
-- **Collector**: Collects and archives Nostr data in JSON format. The collector can also broadcast the archives to Nostr relays.
-- **Viewer**: Loads and browses existing archive files with sorting and detailed views of event metadata and content.
-
-## Project Structure
-
-- **`index.html`**: The landing page with navigation links to the collector and viewer tools.
-- **`collector.html`**: The interface for collecting and archiving Nostr events.
-- **`view-archive.html`**: The interface for browsing archived JSON files.
-- **`script.js`**: The logic for interacting with Nostr relays in the collector tool.
+- **Collector**: Gather Nostr events by entering an NPub (public key) and a list of relay URLs. Save collected events as a JSON archive or broadcast them directly to relays.
+- **Viewer**: Load JSON archives to browse and analyze event data. Includes advanced filtering options like regex search, date ranges, and kind filtering.
+- **Broadcast**: Distribute archived events to multiple relays with progress tracking and verification.
 
 ## Getting Started
 
 ### Prerequisites
 
-Ensure you have the following installed:
-- A modern web browser (Chrome, Firefox, etc.)
-- Basic knowledge of Nostr events and relays
+To use Archivestr, you'll need:
+- A modern web browser (e.g., Chrome, Firefox)
+- An active Nostr public key (NPub) and access to relay URLs
+
+### Usage
+
+1. **Collector**:
+   - Enter your NPub and relay URLs.
+   - Click "Start Collecting" to fetch events from relays.
+   - Download the archive as a JSON file for storage or analysis.
+
+2. **Viewer**:
+   - Load a JSON archive to browse events.
+   - Use filters to search by content, event kind, or date.
+   - Sort and paginate through event metadata and content.
+
+3. **Broadcast**:
+   - Upload a JSON archive file.
+   - Specify relay URLs to share the events across the Nostr network.
+   - Track progress and verify broadcast success.
 
 ### Installation
 
@@ -30,40 +41,20 @@ Ensure you have the following installed:
    ```
 2. Navigate to the project directory:
    ```bash
-   cd archivestr
+   cd Archivestr
    ```
-3. Open `index.html` in a browser to get started.
+3. Open `index.html` in a browser to start using Archivestr.
 
-## Usage
+## Why Use Archivestr?
 
-### Collector
-
-1. Navigate to `collector.html`.
-2. Enter the NPub (public key) and relay URLs to collect data.
-3. Start collecting events, and download the archive as a JSON file.
-
-### Viewer
-
-1. Navigate to `view-archive.html`.
-2. Load a JSON archive file.
-3. Browse, sort, and view details of the events in the archive.
-
-## Development
-
-Feel free to contribute or customize the project:
-
-1. Modify `collector.html` or `view-archive.html` as needed.
-2. Enhance the functionality in `script.js`.
-3. Update the styling in the `<style>` sections or move styles to external CSS files.
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+- **Simplicity**: No need for complex setups—just open the tool and start managing your archives.
+- **Flexibility**: Collect, browse, and broadcast archives, all in one place.
+- **Control**: Maintain your own data and decide how and where it's shared.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Archivestr is released under the **CC0 - No Rights Reserved** license. Use it, modify it, and share it freely.
 
-## GitHub Repository
+---
 
-Visit the [GitHub repository](https://github.com/PR0M3TH3AN/Archivestr) for the source code and updates.
+For updates and contributions, visit the [GitHub repository](https://github.com/PR0M3TH3AN/Archivestr).
