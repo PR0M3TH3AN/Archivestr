@@ -1,0 +1,25 @@
+[
+  {
+    "content": "Welcome to Archivestr\n\nArchivestr is your one-stop tool for creating, browsing, and broadcasting Nostr archives. Whether you’re collecting events, exploring data, or sharing with others, Archivestr makes it simple and efficient.",
+    "created_at": 1736022251,
+    "id": "343c152fdcbaed9d22688978fd128568c1e836f4ebc8fee2fb52203cda6cc6c1",
+    "kind": 1,
+    "pubkey": "97dbe5b365d925c44ed6108b7618b50f2b6e12cb9b4ab120f31f2a079ad7b4c7",
+    "sig": "ec07edb5f21db555831383479b9d20ef862d33da11b79cf940ff9cb6edec9a37ae20f610a8940bbb1bce0e2c2be20ade9f8350c328d0511a1b2aab1454a9a5f4",
+    "tags": [
+      [
+        "r",
+        "wss://relay.primal.net/"
+      ]
+    ]
+  },
+  {
+    "content": "{\"name\":\"Archivestr\",\"displayName\":\"🏛️ ARCHIVESTR 🏛️\",\"pubkey\":\"97dbe5b365d925c44ed6108b7618b50f2b6e12cb9b4ab120f31f2a079ad7b4c7\",\"npub\":\"npub1jld7tvm9myjugnkkzz9hvx94pu4kuyktnd9tzg8nru4q0xkhknrsvxstsv\",\"created_at\":1736021247,\"display_name\":\"🏛️ ARCHIVESTR 🏛️\",\"website\":\"https://archivestr.netlify.app/\",\"about\":\"A Nostr Archive Creation, Browser, and Broadcaster Tool\",\"lud16\":\"npub1jld7tvm9myjugnkkzz9hvx94pu4kuyktnd9tzg8nru4q0xkhknrsvxstsv@npub.cash\",\"picture\":\"https://m.primal.net/NSEq.jpg\",\"banner\":\"https://image.nostr.build/78f9835d528a28eed4a72b0226e8b147dc745260273ef8a237037b05776ba930.jpg\"}",
+    "created_at": 1736022218,
+    "id": "364ddd3a9a570dadd415abd2092a2b912480f45acbc784ffad63f83dc9d913e0",
+    "kind": 0,
+    "pubkey": "97dbe5b365d925c44ed6108b7618b50f2b6e12cb9b4ab120f31f2a079ad7b4c7",
+    "sig": "24e84fefe35acaf9d87062e1157fe1c2c831bdda47d74c92192f1be39ba7b74b749e2483aaa49d125b1a2a9a17f225f1581bc38acb397e61defbb3a2ff2517fa",
+    "tags": []
+  }
+]
