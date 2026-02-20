@@ -1,0 +1,29 @@
+{
+  "name": "archivestr",
+  "version": "1.0.0",
+  "description": "![Archivestr Logo](https://archivestr.netlify.app/img/Archivestr.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "torch:dashboard": "npm run --prefix torch dashboard:serve",
+    "torch:check": "npm run --prefix torch lock:check:daily",
+    "torch:lock": "npm run --prefix torch lock:lock",
+    "torch:health": "npm run --prefix torch lock:health",
+    "torch:memory:list": "node torch/bin/torch-lock.mjs list-memories",
+    "torch:memory:inspect": "node torch/bin/torch-lock.mjs inspect-memory"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PR0M3TH3AN/Archivestr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PR0M3TH3AN/Archivestr/issues"
+  },
+  "homepage": "https://github.com/PR0M3TH3AN/Archivestr#readme",
+  "dependencies": {
+    "torch-lock": "https://github.com/PR0M3TH3AN/TORCH/archive/refs/heads/main.tar.gz"
+  }
+}
