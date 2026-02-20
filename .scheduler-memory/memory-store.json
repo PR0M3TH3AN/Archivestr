@@ -17,7 +17,7 @@
       "importance": 0.4,
       "embedding_id": null,
       "created_at": 1771558399336,
-      "last_seen": 1771558399343,
+      "last_seen": 1771596755883,
       "source": "scheduler-retrieve",
       "ttl_days": null,
       "merged_into": null,
@@ -43,6 +43,381 @@
       "embedding_id": null,
       "created_at": 1771558549496,
       "last_seen": 1771558549497,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "7b35c3e0-e01a-4015-b27e-dfbe8c43ef7a",
+    {
+      "schema_version": 1,
+      "id": "7b35c3e0-e01a-4015-b27e-dfbe8c43ef7a",
+      "agent_id": "scheduler-memory-daily",
+      "session_id": "session-mluyytgn",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771596755879,
+      "last_seen": 1771596755883,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "fbc6aad6-ae89-4bf2-8c67-0053cb5c67d9",
+    {
+      "schema_version": 1,
+      "id": "fbc6aad6-ae89-4bf2-8c67-0053cb5c67d9",
+      "agent_id": "scheduler-memory-weekly",
+      "session_id": "session-mluyztmu",
+      "type": "batch_window",
+      "content": "Store memory event A for weekly :: scheduler memory store\nStore memory event B for weekly :: scheduler memory store",
+      "summary": "Store memory event A for weekly :: scheduler memory store Store memory event B for weekly :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "weekly",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771596802758,
+      "last_seen": 1771596802759,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "05791126-ee9b-4c8e-913d-30a6c930b5bf",
+    {
+      "schema_version": 1,
+      "id": "05791126-ee9b-4c8e-913d-30a6c930b5bf",
+      "agent_id": "style-agent",
+      "session_id": "session-mluz1yd4",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771596902200,
+      "last_seen": 1771596902201,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "b8705dfd-20f0-42a2-af23-de692718013d",
+    {
+      "schema_version": 1,
+      "id": "b8705dfd-20f0-42a2-af23-de692718013d",
+      "agent_id": "test-audit-agent",
+      "session_id": "session-mluzff2k",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771597530380,
+      "last_seen": 1771597530385,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "12378812-8347-4458-a373-12c3abe905e4",
+    {
+      "schema_version": 1,
+      "id": "12378812-8347-4458-a373-12c3abe905e4",
+      "agent_id": "test-audit-agent",
+      "session_id": "session-mluzfucz",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771597550195,
+      "last_seen": 1771597550196,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "c1b3098d-fc75-4e2f-a087-718806d32c7d",
+    {
+      "schema_version": 1,
+      "id": "c1b3098d-fc75-4e2f-a087-718806d32c7d",
+      "agent_id": "todo-triage-agent",
+      "session_id": "session-mluzkanb",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771597757927,
+      "last_seen": 1771597757937,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "2c83e058-51fc-42fe-a68c-06b08a9a8e29",
+    {
+      "schema_version": 1,
+      "id": "2c83e058-51fc-42fe-a68c-06b08a9a8e29",
+      "agent_id": "todo-triage-agent",
+      "session_id": "session-mluzkknh",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771597770893,
+      "last_seen": 1771597770894,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "69ba2c33-e762-4d4b-9143-3b9bcb45412f",
+    {
+      "schema_version": 1,
+      "id": "69ba2c33-e762-4d4b-9143-3b9bcb45412f",
+      "agent_id": "torch-garbage-collection-agent",
+      "session_id": "session-mluzsu17",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771598156299,
+      "last_seen": 1771598156305,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "3f6fef8d-b01f-45d4-925c-ad692059bd35",
+    {
+      "schema_version": 1,
+      "id": "3f6fef8d-b01f-45d4-925c-ad692059bd35",
+      "agent_id": "torch-garbage-collection-agent",
+      "session_id": "session-mluzt2t2",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771598167670,
+      "last_seen": 1771598167671,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "a047de7f-bbeb-40d0-ac23-f5a43753f664",
+    {
+      "schema_version": 1,
+      "id": "a047de7f-bbeb-40d0-ac23-f5a43753f664",
+      "agent_id": "audit-agent",
+      "session_id": "session-mlv03xay",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771598673754,
+      "last_seen": 1771598673758,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "02b1409a-fd8f-478e-816c-bbd985e106d8",
+    {
+      "schema_version": 1,
+      "id": "02b1409a-fd8f-478e-816c-bbd985e106d8",
+      "agent_id": "audit-agent",
+      "session_id": "session-mlv0498w",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771598689232,
+      "last_seen": 1771598689233,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "0da3cadf-a44a-4055-8e3c-838b924a2f48",
+    {
+      "schema_version": 1,
+      "id": "0da3cadf-a44a-4055-8e3c-838b924a2f48",
+      "agent_id": "ci-health-agent",
+      "session_id": "session-mlv16ngi",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771600480578,
+      "last_seen": 1771600480583,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "24c22a90-aa05-4b71-b525-2274313658b5",
+    {
+      "schema_version": 1,
+      "id": "24c22a90-aa05-4b71-b525-2274313658b5",
+      "agent_id": "ci-health-agent",
+      "session_id": "session-mlv16wbs",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771600492072,
+      "last_seen": 1771600492073,
+      "source": "scheduler-store",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "e4405f5d-ff1f-481b-9981-b5f78d344860",
+    {
+      "schema_version": 1,
+      "id": "e4405f5d-ff1f-481b-9981-b5f78d344860",
+      "agent_id": "const-refactor-agent",
+      "session_id": "session-mlv1h4b5",
+      "type": "batch_window",
+      "content": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "summary": "Memory retrieval seed for daily :: scheduler memory retrieval",
+      "tags": [
+        "scheduler",
+        "daily",
+        "retrieve"
+      ],
+      "importance": 0.4,
+      "embedding_id": null,
+      "created_at": 1771600968977,
+      "last_seen": 1771600968992,
+      "source": "scheduler-retrieve",
+      "ttl_days": null,
+      "merged_into": null,
+      "pinned": false
+    }
+  ],
+  [
+    "fcbf743f-3818-4502-99ec-273e691f0840",
+    {
+      "schema_version": 1,
+      "id": "fcbf743f-3818-4502-99ec-273e691f0840",
+      "agent_id": "const-refactor-agent",
+      "session_id": "session-mlv1hbp7",
+      "type": "batch_window",
+      "content": "Store memory event A for daily :: scheduler memory store\nStore memory event B for daily :: scheduler memory store",
+      "summary": "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store",
+      "tags": [
+        "scheduler",
+        "daily",
+        "store"
+      ],
+      "importance": 0.55,
+      "embedding_id": null,
+      "created_at": 1771600978555,
+      "last_seen": 1771600978556,
       "source": "scheduler-store",
       "ttl_days": null,
       "merged_into": null,

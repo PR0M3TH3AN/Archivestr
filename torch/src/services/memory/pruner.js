@@ -197,7 +197,7 @@ export async function createLifecyclePlan(memories, options) {
 
   const templates = loadMemoryPromptTemplates({ templateDir: options.templateDir });
   const condensedGroups = await Promise.all(
-    groups.map((group) => condenseGroup(group, options.generateSummary, templates.condense))
+    groups.map((group) => condenseGroup(group, options.generateSummary, templates.condense)),
   );
 
   const mergedIntoMap = new Map();

@@ -28,9 +28,9 @@ export async function listProposals() {
         const meta = JSON.parse(metaContent);
         proposals.push({
           id: entry.name,
-          ...meta
+          ...meta,
         });
-      } catch (_e) {
+      } catch {
         // Ignore invalid proposals
       }
     }
@@ -59,7 +59,7 @@ export async function getProposal(id) {
       meta,
       newContent,
       diff,
-      dir
+      dir,
     };
   } catch (e) {
     throw new Error(`Proposal ${id} not found or invalid: ${e.message}`, { cause: e });
@@ -103,11 +103,11 @@ export async function createProposal({ agent, target, newContent, reason }) {
       if (e.status === 1 && e.stdout) {
         diff = e.stdout.toString();
       } else if (e.status !== 1) {
-          // Some other error
-          console.error('Diff generation failed:', e.message);
+        // Some other error
+        console.error('Diff generation failed:', e.message);
       }
     }
-  } catch (_err) {
+  } catch {
     diff = '(New File)';
   }
 
@@ -119,7 +119,7 @@ export async function createProposal({ agent, target, newContent, reason }) {
     target,
     reason,
     timestamp: new Date().toISOString(),
-    status: 'pending'
+    status: 'pending',
   };
 
   await fs.writeFile(path.join(dir, 'meta.json'), JSON.stringify(meta, null, 2));
@@ -146,7 +146,7 @@ export async function validateProposal(id) {
 
   for (const pattern of requiredPatterns) {
     if (!pattern.test(newContent)) {
-       return { valid: false, reason: `Missing required header pattern: ${pattern}` };
+      return { valid: false, reason: `Missing required header pattern: ${pattern}` };
     }
   }
 
@@ -195,7 +195,7 @@ export async function applyProposal(id) {
       archivedAt: new Date().toISOString(),
     };
     await fs.writeFile(archivePath.replace(/\.md$/, '.meta.json'), JSON.stringify(archiveMeta, null, 2));
-  } catch (_e) {
+  } catch {
     // If file didn't exist, nothing to archive
   }
 
@@ -272,7 +272,7 @@ export async function listPromptVersions(target) {
         // Convert back: YYYY-MM-DDTHH-MM-SS-mmmZ -> ISO
         archivedAt = tsPart.replace(
           /^(\d{4}-\d{2}-\d{2}T\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/,
-          '$1:$2:$3.$4Z'
+          '$1:$2:$3.$4Z',
         );
         if (archivedAt === tsPart) archivedAt = null; // parse failed
       } else {
@@ -295,7 +295,7 @@ export async function listPromptVersions(target) {
         reason: meta?.reason ?? null,
       });
     }
-  } catch (_e) {
+  } catch {
     // archiveDir doesn't exist — no versions yet
   }
 
@@ -332,7 +332,7 @@ export async function rollbackPrompt(target, hashOrStrategy = 'latest') {
         sourceContent = await fs.readFile(path.join(archiveDir, match), 'utf8');
       }
     }
-  } catch (_e) {
+  } catch {
     // Archive lookup failed
   }
 

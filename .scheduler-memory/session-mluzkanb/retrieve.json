@@ -1,0 +1,18 @@
+{
+  "cadence": "daily",
+  "operation": "retrieve",
+  "runId": "session-mluzkanb",
+  "servicePath": "src/services/memory/index.js#getRelevantMemories",
+  "inputs": {
+    "agentId": "todo-triage-agent",
+    "promptPath": "",
+    "promptIntent": "scheduler memory retrieval",
+    "query": "scheduler | daily | agent | todo-triage-agent | intent | scheduler memory retrieval",
+    "events": 1
+  },
+  "outputs": {
+    "ingestedCount": 1,
+    "retrievedCount": 1
+  },
+  "status": "ok"
+}

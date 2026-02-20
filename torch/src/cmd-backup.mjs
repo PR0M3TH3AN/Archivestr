@@ -67,7 +67,7 @@ export async function cmdBackup({ output = null } = {}) {
 
   await fs.writeFile(
     path.join(backupDir, 'backup-manifest.json'),
-    JSON.stringify(manifest, null, 2)
+    JSON.stringify(manifest, null, 2),
   );
 
   console.log(JSON.stringify({ success: true, ...manifest }, null, 2));

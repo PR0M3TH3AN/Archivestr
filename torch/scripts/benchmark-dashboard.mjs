@@ -22,7 +22,7 @@ async function waitForServer() {
         req.end();
       });
       return;
-    } catch (_e) {
+    } catch {
       await sleep(100);
     }
   }
@@ -43,7 +43,7 @@ function makeRequest() {
 async function benchmark() {
   console.log('Starting server...');
   const serverProcess = spawn('node', ['bin/torch-lock.mjs', 'dashboard', '--port', String(PORT)], {
-    stdio: 'ignore' // Suppress logs for cleaner output
+    stdio: 'ignore', // Suppress logs for cleaner output
   });
 
   try {
@@ -54,20 +54,20 @@ async function benchmark() {
 
     let sent = 0;
     const worker = async () => {
-        while (true) {
-            const current = sent++;
-            if (current >= REQUESTS) break;
-            try {
-                await makeRequest();
-            } catch (_e) {
-                // console.error(_e);
-            }
+      while (true) {
+        const current = sent++;
+        if (current >= REQUESTS) break;
+        try {
+          await makeRequest();
+        } catch {
+          // console.error(_e);
         }
+      }
     };
 
     const workers = [];
     for (let i = 0; i < CONCURRENCY; i++) {
-        workers.push(worker());
+      workers.push(worker());
     }
 
     await Promise.all(workers);

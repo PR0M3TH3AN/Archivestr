@@ -74,7 +74,7 @@ Options:
             continue;
           }
           if (['.js', '.mjs', '.ts', '.html', '.css', '.json', '.md'].includes(path.extname(item))) {
-             files.push(fullPath);
+            files.push(fullPath);
           }
         }
       }

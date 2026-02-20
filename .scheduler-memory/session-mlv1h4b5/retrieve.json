@@ -1,0 +1,18 @@
+{
+  "cadence": "daily",
+  "operation": "retrieve",
+  "runId": "session-mlv1h4b5",
+  "servicePath": "src/services/memory/index.js#getRelevantMemories",
+  "inputs": {
+    "agentId": "const-refactor-agent",
+    "promptPath": "",
+    "promptIntent": "scheduler memory retrieval",
+    "query": "scheduler | daily | agent | const-refactor-agent | intent | scheduler memory retrieval",
+    "events": 1
+  },
+  "outputs": {
+    "ingestedCount": 1,
+    "retrievedCount": 1
+  },
+  "status": "ok"
+}

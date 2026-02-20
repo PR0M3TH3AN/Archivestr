@@ -4,19 +4,19 @@ import fs from 'node:fs/promises';
 
 export async function cmdProposal(subcommand, args = {}) {
   switch (subcommand) {
-    case 'create':
-      return await handleCreate(args);
-    case 'list':
-      return await handleList(args);
-    case 'apply':
-      return await handleApply(args);
-    case 'reject':
-      return await handleReject(args);
-    case 'show':
-      return await handleShow(args);
-    default:
-      console.error(`Unknown proposal subcommand: ${subcommand}`);
-      throw new ExitError(1, 'Unknown subcommand');
+  case 'create':
+    return handleCreate(args);
+  case 'list':
+    return handleList(args);
+  case 'apply':
+    return handleApply(args);
+  case 'reject':
+    return handleReject(args);
+  case 'show':
+    return handleShow(args);
+  default:
+    console.error(`Unknown proposal subcommand: ${subcommand}`);
+    throw new ExitError(1, 'Unknown subcommand');
   }
 }
 
@@ -29,7 +29,7 @@ async function handleCreate({ agent, target, contentFile, reason }) {
   let newContent;
   try {
     newContent = await fs.readFile(contentFile, 'utf8');
-  } catch (_e) {
+  } catch {
     console.error(`Failed to read content file: ${contentFile}`);
     throw new ExitError(1, 'File read error');
   }
@@ -85,15 +85,15 @@ async function handleReject({ id, reason }) {
 }
 
 async function handleShow({ id }) {
-    if (!id) {
-        console.error('Usage: torch-lock proposal show --id <proposal-id>');
-        throw new ExitError(1, 'Missing id');
-    }
-    try {
-        const proposal = await getProposal(id);
-        console.log(JSON.stringify(proposal, null, 2));
-    } catch (e) {
-        console.error(`Failed to show proposal: ${e.message}`);
-        throw new ExitError(1, 'Show failed');
-    }
+  if (!id) {
+    console.error('Usage: torch-lock proposal show --id <proposal-id>');
+    throw new ExitError(1, 'Missing id');
+  }
+  try {
+    const proposal = await getProposal(id);
+    console.log(JSON.stringify(proposal, null, 2));
+  } catch (e) {
+    console.error(`Failed to show proposal: ${e.message}`);
+    throw new ExitError(1, 'Show failed');
+  }
 }

@@ -46,9 +46,9 @@ const LOG_FILE = 'artifacts/debug_frontend.log';
   });
 
   try {
-    log(`Navigating to http://localhost:4173/dashboard/...`);
+    log('Navigating to http://localhost:4173/dashboard/...');
     await page.goto('http://localhost:4173/dashboard/', { waitUntil: 'networkidle', timeout: 10000 });
-    log(`Navigation complete.`);
+    log('Navigation complete.');
     // Give it a bit more time for any delayed errors
     await page.waitForTimeout(2000);
   } catch (e) {
@@ -64,7 +64,7 @@ const LOG_FILE = 'artifacts/debug_frontend.log';
     console.error(`\nFound ${errors.length} errors.`);
     process.exit(1);
   } else {
-    console.log(`\nNo errors found.`);
+    console.log('\nNo errors found.');
     process.exit(0);
   }
 })();

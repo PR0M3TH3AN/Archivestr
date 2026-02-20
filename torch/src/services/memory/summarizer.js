@@ -25,7 +25,7 @@ function redactObviousPii(text) {
 function renderTemplate(template, replacements) {
   return Object.entries(replacements).reduce(
     (output, [key, value]) => output.replaceAll(`{{${key}}}`, String(value ?? '')),
-    template
+    template,
   );
 }
 
@@ -40,7 +40,7 @@ export function loadMemoryPromptTemplates(options = {}) {
       const filePath = path.join(templateDir, fileName);
       const content = readFileSync(filePath, 'utf8').trim();
       return [key, content];
-    })
+    }),
   );
 
   templateCache.set(templateDir, templates);
@@ -77,7 +77,7 @@ function isLikelyFactual(summary, sourceText) {
     sourceText
       .toLowerCase()
       .split(/[^a-z0-9]+/)
-      .filter((token) => token.length > 3)
+      .filter((token) => token.length > 3),
   );
   const summaryTokens = summary
     .toLowerCase()

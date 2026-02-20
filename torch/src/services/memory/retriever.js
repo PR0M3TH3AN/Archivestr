@@ -54,8 +54,8 @@ function textMatchSimilarity(queryTerms, queryRegexes, memory) {
  */
 function matchesMetadataFilters(memory, params) {
   const inTimeframe = !params.timeframe
-    || ((params.timeframe.from == null || memory.created_at >= params.timeframe.from)
-      && (params.timeframe.to == null || memory.created_at <= params.timeframe.to));
+    || ((params.timeframe.from === null || memory.created_at >= params.timeframe.from)
+      && (params.timeframe.to === null || memory.created_at <= params.timeframe.to));
 
   if (!inTimeframe) return false;
 

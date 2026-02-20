@@ -113,7 +113,7 @@ function toContextString(agentContext) {
     return agentContext.trim();
   }
 
-  if (agentContext == null) {
+  if (agentContext === null || agentContext === undefined) {
     return '';
   }
 

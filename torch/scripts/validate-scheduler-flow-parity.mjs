@@ -70,7 +70,7 @@ const invariants = [
       'parseFrontmatterAgent(content) || parseAgentFromFilename(latestFile)',
       'scheduler.firstPromptByCadence?.[cadence]',
       'ALL_EXCLUDED_REASON',
-      "reason: ALL_EXCLUDED_REASON",
+      'reason: ALL_EXCLUDED_REASON',
     ],
   },
   {
@@ -161,7 +161,7 @@ const [meta, flow, scheduler] = await Promise.all([
 const errors = [];
 
 for (const invariant of invariants) {
-    if (invariant.promptSnippets?.meta) {
+  if (invariant.promptSnippets?.meta) {
     const missingMeta = collectMissing(meta, invariant.promptSnippets.meta);
     for (const snippet of missingMeta) {
       errors.push(`[${invariant.name}] ${FILES.meta} missing snippet: ${snippet}`);

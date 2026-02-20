@@ -28,19 +28,19 @@ const APP_DIRS = ['src', 'bin', 'dashboard', 'landing', 'assets', 'scripts'];
 const APP_FILES = ['package.json', 'build.mjs', 'README.md', 'torch-config.example.json', 'TORCH.md'];
 
 function getPaths(root, installDirName) {
-    const torchDir = path.resolve(root, installDirName);
-    return {
-        root,
-        torchDir,
-        promptsDir: path.join(torchDir, 'prompts'),
-        roster: path.join(torchDir, 'roster.json'),
-    };
+  const torchDir = path.resolve(root, installDirName);
+  return {
+    root,
+    torchDir,
+    promptsDir: path.join(torchDir, 'prompts'),
+    roster: path.join(torchDir, 'roster.json'),
+  };
 }
 
 function copyDir(src, dest) {
-    if (fs.existsSync(src)) {
-        fs.cpSync(src, dest, { recursive: true });
-    }
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, dest, { recursive: true });
+  }
 }
 
 function transformContent(content, installDirName) {
@@ -176,10 +176,10 @@ async function resolveConfiguration(cwd, mockAnswers) {
 
 function ensureInstallDirectory(paths, force, installDir) {
   if (fs.existsSync(paths.torchDir) && !force) {
-     const entries = fs.readdirSync(paths.torchDir);
-     if (entries.length > 0 && installDir !== '.') {
-         throw new Error(`Directory ${paths.torchDir} already exists and is not empty. Use --force to overwrite.`);
-     }
+    const entries = fs.readdirSync(paths.torchDir);
+    if (entries.length > 0 && installDir !== '.') {
+      throw new Error(`Directory ${paths.torchDir} already exists and is not empty. Use --force to overwrite.`);
+    }
   }
   ensureDir(paths.torchDir);
   ensureDir(paths.promptsDir);
@@ -249,17 +249,17 @@ function configureTorch(cwd, paths, installDir, namespace, relays, hashtag) {
 
   // Try to load existing or example
   if (fs.existsSync(configPath)) {
-      try {
-          configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-          console.log(`Updating existing ${path.relative(cwd, configPath)}...`);
-      } catch (e) {
-          console.warn(`Could not parse existing config: ${e.message}`);
-      }
+    try {
+      configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      console.log(`Updating existing ${path.relative(cwd, configPath)}...`);
+    } catch (e) {
+      console.warn(`Could not parse existing config: ${e.message}`);
+    }
   } else {
-      const exampleConfigPath = path.join(PKG_ROOT, 'torch-config.example.json');
-      if (fs.existsSync(exampleConfigPath)) {
-          configData = JSON.parse(fs.readFileSync(exampleConfigPath, 'utf8'));
-      }
+    const exampleConfigPath = path.join(PKG_ROOT, 'torch-config.example.json');
+    if (fs.existsSync(exampleConfigPath)) {
+      configData = JSON.parse(fs.readFileSync(exampleConfigPath, 'utf8'));
+    }
   }
 
   // Apply user choices
@@ -286,11 +286,11 @@ function configureTorch(cwd, paths, installDir, namespace, relays, hashtag) {
   ['daily', 'weekly'].forEach(cadence => {
     if (!configData.scheduler.memoryPolicyByCadence[cadence]) {
       configData.scheduler.memoryPolicyByCadence[cadence] = {
-        mode: "required",
-        retrieveSuccessMarkers: ["MEMORY_RETRIEVED"],
-        storeSuccessMarkers: ["MEMORY_STORED"],
+        mode: 'required',
+        retrieveSuccessMarkers: ['MEMORY_RETRIEVED'],
+        storeSuccessMarkers: ['MEMORY_STORED'],
         retrieveArtifacts: [`.scheduler-memory/latest/${cadence}/retrieve.ok`],
-        storeArtifacts: [`.scheduler-memory/latest/${cadence}/store.ok`]
+        storeArtifacts: [`.scheduler-memory/latest/${cadence}/store.ok`],
       };
     }
 
@@ -308,7 +308,7 @@ function injectHostScriptsIfNeeded(paths, installDir) {
   // 7. Inject Scripts into Host Package.json
   // If we are NOT installing to '.', the host package.json is in paths.root
   if (installDir !== '.') {
-      injectScriptsIntoHost(paths.root, installDir);
+    injectScriptsIntoHost(paths.root, installDir);
   }
 }
 
@@ -361,44 +361,44 @@ To change these settings, edit \`torch-config.json\` in your project root.
 }
 
 function injectScriptsIntoHost(hostRoot, installDirName) {
-    const hostPkgPath = path.join(hostRoot, 'package.json');
-    if (!fs.existsSync(hostPkgPath)) {
-        console.warn('No package.json found in host root. Skipping script injection.');
-        return;
+  const hostPkgPath = path.join(hostRoot, 'package.json');
+  if (!fs.existsSync(hostPkgPath)) {
+    console.warn('No package.json found in host root. Skipping script injection.');
+    return;
+  }
+
+  try {
+    const pkg = JSON.parse(fs.readFileSync(hostPkgPath, 'utf8'));
+    if (!pkg.scripts) pkg.scripts = {};
+
+    const scriptsToAdd = {
+      'torch:dashboard': `npm run --prefix ${installDirName} dashboard:serve`,
+      'torch:check': `npm run --prefix ${installDirName} lock:check:daily`, // Default to daily check
+      'torch:lock': `npm run --prefix ${installDirName} lock:lock`,
+      'torch:health': `npm run --prefix ${installDirName} lock:health`,
+      'torch:memory:list': `node ${installDirName === '.' ? '' : installDirName + '/'}bin/torch-lock.mjs list-memories`,
+      'torch:memory:inspect': `node ${installDirName === '.' ? '' : installDirName + '/'}bin/torch-lock.mjs inspect-memory`,
+    };
+
+    let modified = false;
+    for (const [key, cmd] of Object.entries(scriptsToAdd)) {
+      if (!pkg.scripts[key]) {
+        pkg.scripts[key] = cmd;
+        console.log(`  Added script: "${key}"`);
+        modified = true;
+      } else {
+        console.log(`  Script "${key}" already exists, skipping.`);
+      }
     }
 
-    try {
-        const pkg = JSON.parse(fs.readFileSync(hostPkgPath, 'utf8'));
-        if (!pkg.scripts) pkg.scripts = {};
-
-        const scriptsToAdd = {
-            'torch:dashboard': `npm run --prefix ${installDirName} dashboard:serve`,
-            'torch:check': `npm run --prefix ${installDirName} lock:check:daily`, // Default to daily check
-            'torch:lock': `npm run --prefix ${installDirName} lock:lock`,
-            'torch:health': `npm run --prefix ${installDirName} lock:health`,
-            'torch:memory:list': `node ${installDirName === '.' ? '' : installDirName + '/'}bin/torch-lock.mjs list-memories`,
-            'torch:memory:inspect': `node ${installDirName === '.' ? '' : installDirName + '/'}bin/torch-lock.mjs inspect-memory`,
-        };
-
-        let modified = false;
-        for (const [key, cmd] of Object.entries(scriptsToAdd)) {
-            if (!pkg.scripts[key]) {
-                pkg.scripts[key] = cmd;
-                console.log(`  Added script: "${key}"`);
-                modified = true;
-            } else {
-                console.log(`  Script "${key}" already exists, skipping.`);
-            }
-        }
-
-        if (modified) {
-            fs.writeFileSync(hostPkgPath, JSON.stringify(pkg, null, 2), 'utf8');
-            console.log('Updated package.json with convenience scripts.');
-        }
-
-    } catch (e) {
-        console.error(`Failed to inject scripts: ${e.message}`);
+    if (modified) {
+      fs.writeFileSync(hostPkgPath, JSON.stringify(pkg, null, 2), 'utf8');
+      console.log('Updated package.json with convenience scripts.');
     }
+
+  } catch (e) {
+    console.error(`Failed to inject scripts: ${e.message}`);
+  }
 }
 
 /**
@@ -431,7 +431,7 @@ function detectTorchInstallDir(cwd) {
       if (pkg.name === 'torch-lock') {
         return '.';
       }
-    } catch (_e) {
+    } catch {
       // Ignore parse errors
     }
   }
@@ -571,7 +571,7 @@ export async function cmdRemove(force = false, cwd = process.cwd(), mockAnswers 
       if (pkg.scripts) {
         hasHostScripts = TORCH_HOST_SCRIPTS.some(key => key in pkg.scripts);
       }
-    } catch (_e) { /* ignore */ }
+    } catch { /* ignore */ }
   }
 
   if (targets.length === 0 && !hasHostScripts) {
@@ -628,7 +628,7 @@ export async function cmdRemove(force = false, cwd = process.cwd(), mockAnswers 
         fs.rmdirSync(srcDir);
         log('  Removed empty src/ directory');
       }
-    } catch (_e) { /* leave it if not empty or permission error */ }
+    } catch { /* leave it if not empty or permission error */ }
   }
 
   // 3. Remove host package.json scripts
@@ -664,15 +664,15 @@ export function cmdUpdate(force = false, cwd = process.cwd()) {
 
   let installDirName = 'torch';
   if (!fs.existsSync(path.join(cwd, 'torch')) && fs.existsSync(path.join(cwd, 'package.json'))) {
-      // Check if current dir is the torch dir
-      try {
-          const pkg = JSON.parse(fs.readFileSync(path.join(cwd, 'package.json'), 'utf8'));
-          if (pkg.name === 'torch-lock') {
-              installDirName = '.';
-          }
-      } catch (_e) {
-          // Ignore error if package.json is missing or invalid
+    // Check if current dir is the torch dir
+    try {
+      const pkg = JSON.parse(fs.readFileSync(path.join(cwd, 'package.json'), 'utf8'));
+      if (pkg.name === 'torch-lock') {
+        installDirName = '.';
       }
+    } catch {
+      // Ignore error if package.json is missing or invalid
+    }
   }
 
   const paths = getPaths(cwd, installDirName);
@@ -693,11 +693,11 @@ export function cmdUpdate(force = false, cwd = process.cwd()) {
   // We backup EVERYTHING in torchDir except _backups and node_modules
   const entries = fs.readdirSync(paths.torchDir);
   for (const entry of entries) {
-      if (entry === '_backups' || entry === 'node_modules' || entry === '.git') continue;
+    if (entry === '_backups' || entry === 'node_modules' || entry === '.git') continue;
 
-      const srcPath = path.join(paths.torchDir, entry);
-      const destPath = path.join(thisBackupDir, entry);
-      fs.cpSync(srcPath, destPath, { recursive: true });
+    const srcPath = path.join(paths.torchDir, entry);
+    const destPath = path.join(thisBackupDir, entry);
+    fs.cpSync(srcPath, destPath, { recursive: true });
   }
 
   // 2. Update App Directories (Overwrite)
@@ -746,15 +746,15 @@ export function cmdUpdate(force = false, cwd = process.cwd()) {
         const destFile = path.join(destDir, file);
 
         if (force) {
-            copyFile(srcFile, destFile, false, true, installDirName);
-            updated++;
+          copyFile(srcFile, destFile, false, true, installDirName);
+          updated++;
         } else {
-            if (!fs.existsSync(destFile)) {
-                copyFile(srcFile, destFile, false, true, installDirName);
-                added++;
-            } else {
-                skipped++;
-            }
+          if (!fs.existsSync(destFile)) {
+            copyFile(srcFile, destFile, false, true, installDirName);
+            added++;
+          } else {
+            skipped++;
+          }
         }
       }
       console.log(`  ${dir}/: ${added} added, ${updated} updated, ${skipped} preserved`);

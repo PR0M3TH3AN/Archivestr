@@ -91,7 +91,7 @@ function generateEvent() {
     pubkey: randomString(64), // Mock Pubkey
     created_at: Math.floor(Date.now() / 1000),
     tags: tags,
-    content: content
+    content: content,
   };
 }
 

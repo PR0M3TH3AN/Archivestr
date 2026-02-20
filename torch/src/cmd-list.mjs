@@ -8,14 +8,14 @@ import { todayDateStr as _todayDateStr, nowUnix as _nowUnix } from './utils.mjs'
 
 export async function cmdList(cadence, deps = {}) {
   const {
-      getRelays = _getRelays,
-      getNamespace = _getNamespace,
-      getRoster = _getRoster,
-      queryLocks = _queryLocks,
-      todayDateStr = _todayDateStr,
-      nowUnix = _nowUnix,
-      log = console.log,
-      error = console.error,
+    getRelays = _getRelays,
+    getNamespace = _getNamespace,
+    getRoster = _getRoster,
+    queryLocks = _queryLocks,
+    todayDateStr = _todayDateStr,
+    nowUnix = _nowUnix,
+    log = console.log,
+    error = console.error,
   } = deps;
 
   const relays = await getRelays();

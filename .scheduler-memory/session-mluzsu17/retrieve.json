@@ -1,0 +1,18 @@
+{
+  "cadence": "daily",
+  "operation": "retrieve",
+  "runId": "session-mluzsu17",
+  "servicePath": "src/services/memory/index.js#getRelevantMemories",
+  "inputs": {
+    "agentId": "torch-garbage-collection-agent",
+    "promptPath": "",
+    "promptIntent": "scheduler memory retrieval",
+    "query": "scheduler | daily | agent | torch-garbage-collection-agent | intent | scheduler memory retrieval",
+    "events": 1
+  },
+  "outputs": {
+    "ingestedCount": 1,
+    "retrievedCount": 1
+  },
+  "status": "ok"
+}

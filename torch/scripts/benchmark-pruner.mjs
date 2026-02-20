@@ -121,7 +121,7 @@ async function runBenchmark() {
     const condensedCount = plan.condensedGroups.length;
     // We expect exactly GROUPS condensed groups.
     if (condensedCount !== GROUPS) {
-        console.warn(`Warning: Expected ${GROUPS} condensed groups, but got ${condensedCount}. Check grouping logic.`);
+      console.warn(`Warning: Expected ${GROUPS} condensed groups, but got ${condensedCount}. Check grouping logic.`);
     }
 
     times.push(duration);

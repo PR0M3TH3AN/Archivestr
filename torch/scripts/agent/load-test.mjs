@@ -40,7 +40,7 @@ const stats = {
   latencyMax: 0,
   errors: {},
   startTime: Date.now(),
-  endTime: 0
+  endTime: 0,
 };
 
 async function sleep(ms) {
@@ -103,35 +103,35 @@ async function main() {
 
   return new Promise((resolve) => {
     const timer = setInterval(async () => {
-        if (Date.now() >= end) {
-          clearInterval(timer);
-          pool.close([RELAY_URL]);
-          stats.endTime = Date.now();
-          writeReport(reportDir);
-          resolve();
-          return;
-        }
+      if (Date.now() >= end) {
+        clearInterval(timer);
+        pool.close([RELAY_URL]);
+        stats.endTime = Date.now();
+        writeReport(reportDir);
+        resolve();
+        return;
+      }
 
-        const clientIdx = Math.floor(Math.random() * CLIENTS);
-        const sk = sks[clientIdx];
-        const event = generateEvent(sk);
+      const clientIdx = Math.floor(Math.random() * CLIENTS);
+      const sk = sks[clientIdx];
+      const event = generateEvent(sk);
 
-        stats.totalAttempts++;
-        const sendStart = Date.now();
+      stats.totalAttempts++;
+      const sendStart = Date.now();
 
-        try {
-          await Promise.any(pool.publish([RELAY_URL], event));
-          const latency = Date.now() - sendStart;
-          stats.success++;
-          stats.latencySum += latency;
-          stats.latencyMin = Math.min(stats.latencyMin, latency);
-          stats.latencyMax = Math.max(stats.latencyMax, latency);
-        } catch (err) {
-          stats.failed++;
-          const msg = err.message || String(err);
-          stats.errors[msg] = (stats.errors[msg] || 0) + 1;
-        }
-      }, interval);
+      try {
+        await Promise.any(pool.publish([RELAY_URL], event));
+        const latency = Date.now() - sendStart;
+        stats.success++;
+        stats.latencySum += latency;
+        stats.latencyMin = Math.min(stats.latencyMin, latency);
+        stats.latencyMax = Math.max(stats.latencyMax, latency);
+      } catch (err) {
+        stats.failed++;
+        const msg = err.message || String(err);
+        stats.errors[msg] = (stats.errors[msg] || 0) + 1;
+      }
+    }, interval);
   });
 }
 
@@ -147,7 +147,7 @@ function writeReport(dir) {
       durationSec: DURATION_SEC,
       rateEps: RATE_EPS,
       mix: MIX,
-      dryRun: DRY_RUN
+      dryRun: DRY_RUN,
     },
     results: {
       totalAttempts: stats.totalAttempts,
@@ -157,11 +157,11 @@ function writeReport(dir) {
       latency: {
         min: stats.latencyMin === Infinity ? 0 : stats.latencyMin,
         max: stats.latencyMax,
-        avg: avgLatency
+        avg: avgLatency,
       },
-      errors: stats.errors
+      errors: stats.errors,
     },
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   const dateStr = new Date().toISOString().slice(0, 10);

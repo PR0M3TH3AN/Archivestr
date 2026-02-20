@@ -42,7 +42,7 @@ async function waitForServer(url, timeoutMs = 10000) {
     try {
       const res = await fetch(url);
       if (res.ok) return true;
-    } catch (_e) {
+    } catch {
       // ignore
     }
     await sleep(500);
@@ -63,7 +63,7 @@ async function main() {
   const results = {
     timestamp: new Date().toISOString(),
     steps: [],
-    success: false
+    success: false,
   };
 
   let serverProcess = null;
@@ -133,7 +133,7 @@ async function main() {
       },
       oneose() {
         sub.close();
-      }
+      },
     });
 
     // Wait for event

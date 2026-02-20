@@ -69,14 +69,14 @@ Options:
 
         if (stat.isDirectory()) {
           if (!EXCLUDED_DIRS.includes(item)) {
-             files = files.concat(scanDirectory(fullPath));
+            files = files.concat(scanDirectory(fullPath));
           }
         } else if (stat.isFile()) {
           if (EXCLUDED_FILES.includes(item)) {
             continue;
           }
           if (TARGET_EXTENSIONS.includes(path.extname(item))) {
-             files.push(fullPath);
+            files.push(fullPath);
           }
         }
       }

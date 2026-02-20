@@ -109,7 +109,7 @@ async function listRecentFiles(dirPath, sinceMs) {
       if (!entry.isFile()) continue;
       const filePath = path.join(dirPath, entry.name);
       const stat = await fs.stat(filePath);
-      if (sinceMs != null && stat.mtimeMs < sinceMs) continue;
+      if (sinceMs !== null && stat.mtimeMs < sinceMs) continue;
       files.push({ name: entry.name, filePath, mtimeMs: stat.mtimeMs });
     }
     return files.sort((a, b) => a.mtimeMs - b.mtimeMs);
@@ -305,7 +305,7 @@ async function main() {
   const activePromptPath = args.promptPath || process.env.SCHEDULER_PROMPT_PATH || null;
   const activeRunStart = args.runStart || null;
 
-  if (args.since && sinceMs == null) {
+  if (args.since && sinceMs === null) {
     console.error(`Invalid --since value: ${args.since}`);
     process.exit(2);
   }

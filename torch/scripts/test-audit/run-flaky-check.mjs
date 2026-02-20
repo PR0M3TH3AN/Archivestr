@@ -24,7 +24,7 @@ async function runTests(i) {
   return new Promise((resolve) => {
     // Pass strictly the test args to the child process
     const child = spawn('node', ['--test', ...testArgs], {
-      stdio: ['ignore', 'pipe', 'pipe']
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
 
     let stdout = '';

@@ -12,7 +12,7 @@ function getFiles(dir, files = []) {
         files.push(name);
       }
     }
-  } catch (_e) {
+  } catch {
     // ignore if dir doesn't exist
   }
   return files;
@@ -45,11 +45,11 @@ for (const file of testFiles) {
   // Naive check for assertions: look for assert., expect(, t.
   // Many tests use 't' context from node:test
   if (!content.includes('assert.') && !content.includes('expect(') && !content.includes('t.plan') && !content.includes('strictEqual')) {
-     // This is very naive, might false positive on 't.ok' etc.
-     // Let's look for common assertion keywords.
-     const assertionKeywords = ['assert', 'expect', 'strictEqual', 'deepStrictEqual', 'ok', 'equal'];
-     const hasAssertion = assertionKeywords.some(k => content.includes(k));
-     if (!hasAssertion) issues.push('No obvious assertions');
+    // This is very naive, might false positive on 't.ok' etc.
+    // Let's look for common assertion keywords.
+    const assertionKeywords = ['assert', 'expect', 'strictEqual', 'deepStrictEqual', 'ok', 'equal'];
+    const hasAssertion = assertionKeywords.some(k => content.includes(k));
+    if (!hasAssertion) issues.push('No obvious assertions');
   }
 
   if (issues.length > 0) {

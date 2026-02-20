@@ -1,0 +1,20 @@
+{
+  "cadence": "weekly",
+  "operation": "store",
+  "runId": "session-mluyztmu",
+  "servicePath": "src/services/memory/index.js#ingestEvents",
+  "inputs": {
+    "agentId": "scheduler-memory-weekly",
+    "promptPath": "",
+    "promptIntent": "scheduler memory store",
+    "events": 2,
+    "sourceFile": "fallback"
+  },
+  "outputs": {
+    "storedCount": 1,
+    "summaries": [
+      "Store memory event A for weekly :: scheduler memory store Store memory event B for weekly :: scheduler memory store"
+    ]
+  },
+  "status": "ok"
+}

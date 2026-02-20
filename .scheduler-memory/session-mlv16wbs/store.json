@@ -1,0 +1,20 @@
+{
+  "cadence": "daily",
+  "operation": "store",
+  "runId": "session-mlv16wbs",
+  "servicePath": "src/services/memory/index.js#ingestEvents",
+  "inputs": {
+    "agentId": "ci-health-agent",
+    "promptPath": "",
+    "promptIntent": "scheduler memory store",
+    "events": 2,
+    "sourceFile": "fallback"
+  },
+  "outputs": {
+    "storedCount": 1,
+    "summaries": [
+      "Store memory event A for daily :: scheduler memory store Store memory event B for daily :: scheduler memory store"
+    ]
+  },
+  "status": "ok"
+}

@@ -435,10 +435,10 @@ async function main() {
     const excluded = Array.isArray(checkPayload.excluded)
       ? checkPayload.excluded
       : [...new Set([
-          ...(Array.isArray(checkPayload.locked) ? checkPayload.locked : []),
-          ...(Array.isArray(checkPayload.paused) ? checkPayload.paused : []),
-          ...(Array.isArray(checkPayload.completed) ? checkPayload.completed : []),
-        ])];
+        ...(Array.isArray(checkPayload.locked) ? checkPayload.locked : []),
+        ...(Array.isArray(checkPayload.paused) ? checkPayload.paused : []),
+        ...(Array.isArray(checkPayload.completed) ? checkPayload.completed : []),
+      ])];
     const excludedSet = new Set(excluded);
 
     const latestFile = await getLatestFile(logDir);
